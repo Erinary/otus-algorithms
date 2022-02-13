@@ -13,9 +13,10 @@ public class Application {
         var watch = new StopWatch();
         watch.start();
 
-        logger.info("{}",LuckyTicket.getLuckyTickets());
+        var count = LuckyTicket.getLuckyTicketsRecursively(5, 0, 0);
 
         watch.stop();
+        logger.info("{}", count);
         logger.info("Time Elapsed: " + watch.getTime() + " ms");
     }
 }
