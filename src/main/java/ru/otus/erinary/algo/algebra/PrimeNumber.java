@@ -38,6 +38,13 @@ public class PrimeNumber {
 
             watch.reset();
 
+            watch.start();
+            var eratosthenesResult = eratosthenes(n);
+            watch.stop();
+            logger.info("Eratosthenes method for '{}': {}, Time: {}", n, eratosthenesResult, watch.getTime());
+
+            watch.reset();
+
             logger.info("-------------");
         }
     }
@@ -122,5 +129,27 @@ public class PrimeNumber {
             }
         }
         return true;
+    }
+
+    /**
+     * Алгоритм на основе решета Эратосфена O(N*log(log(N))).
+     *
+     * @param number диапазон, в котором ищем простые числа
+     * @return количество простых чисел
+     */
+    private static long eratosthenes(final int number) {
+        boolean[] divs = new boolean[number + 1];
+        long count = 0;
+        for (int i = 2; i <= number; i++) {
+            if (!divs[i]) {
+                count++;
+                if (i <= Math.sqrt(number)) {
+                    for (int j = i * i; j <= number; j += i) {
+                        divs[j] = true;
+                    }
+                }
+            }
+        }
+        return count;
     }
 }
