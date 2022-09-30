@@ -39,6 +39,16 @@ public class FactorArray<T> implements CustomArrayList<T> {
         size++;
     }
 
+    @Override
+    public void put(T item, int index) {
+
+    }
+
+    @Override
+    public T remove(int index) {
+        return null;
+    }
+
     @SuppressWarnings("unchecked")
     private void resize() {
         T[] newArray = (T[]) (new Object[size() * FACTOR + 1]);
