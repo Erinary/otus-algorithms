@@ -25,6 +25,12 @@ public class DynamicListApp {
         for (int n = 100; n <= 1000000; n *= 10) {
             fillArrayList(vectorList, n);
         }
+
+        logger.info("FactorArray");
+        var factorList = new FactorArray<Integer>();
+        for (int n = 100; n <= 1000000; n *= 10) {
+            fillArrayList(factorList, n);
+        }
     }
 
     private static void fillArrayList(final DynamicList<Integer> list, final int total) {

@@ -6,12 +6,11 @@ package ru.otus.erinary.algo.dynamicarray;
 public class FactorArray<T> extends CustomArrayList<T> {
 
     private static final int FACTOR = 2;
-    private static final int DEFAULT_CAPACITY = 10;
     private int size;
 
     @SuppressWarnings("unchecked")
     public FactorArray() {
-        super((T[]) (new Object[DEFAULT_CAPACITY]));
+        super((T[]) (new Object[0]));
         size = 0;
     }
 
@@ -41,12 +40,24 @@ public class FactorArray<T> extends CustomArrayList<T> {
 
     @Override
     public void put(final T item, final int index) {
-
+        if (size == array.length) {
+            resize();
+        }
+        System.arraycopy(array, index, array, index + 1, array.length - index - 1);
+        array[index] = item;
+        size++;
     }
 
+    @SuppressWarnings({"unchecked", "DuplicatedCode"})
     @Override
     public T remove(final int index) {
-        return null;
+        T item = array[index];
+        T[] newArray = (T[]) (new Object[size() - 1]);
+        System.arraycopy(array, 0, newArray, 0, index);
+        System.arraycopy(array, index + 1, newArray, index, size() - 1 - index);
+        array = newArray;
+        size--;
+        return item;
     }
 
     @SuppressWarnings("unchecked")

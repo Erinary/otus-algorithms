@@ -49,10 +49,14 @@ public class VectorArray<T> extends CustomArrayList<T> {
         size++;
     }
 
+    @SuppressWarnings({"unchecked", "DuplicatedCode"})
     @Override
     public T remove(final int index) {
         T item = array[index];
-        System.arraycopy(array, index + 1, array, index, array.length - 1 - index);
+        T[] newArray = (T[]) (new Object[size() - 1]);
+        System.arraycopy(array, 0, newArray, 0, index);
+        System.arraycopy(array, index + 1, newArray, index, size() - 1 - index);
+        array = newArray;
         size--;
         return item;
     }
