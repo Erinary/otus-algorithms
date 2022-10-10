@@ -3,17 +3,16 @@ package ru.otus.erinary.algo.dynamicarray;
 /**
  * Список на массиве заданного размера.
  */
-public class VectorArray<T> implements CustomArrayList<T>{
+public class VectorArray<T> extends CustomArrayList<T> {
 
     private final int vector;
-    private T[] array;
     private int size;
 
     @SuppressWarnings("unchecked")
     public VectorArray(final int vector) {
+        super((T[]) (new Object[vector]));
         this.vector = vector;
-        array = (T[]) (new Object[vector]);
-        size = 0;
+        this.size = 0;
     }
 
     @Override
@@ -41,13 +40,21 @@ public class VectorArray<T> implements CustomArrayList<T>{
     }
 
     @Override
-    public void put(T item, int index) {
-
+    public void put(final T item, final int index) {
+        if (size == array.length) {
+            resize();
+        }
+        System.arraycopy(array, index, array, index + 1, array.length - index - 1);
+        array[index] = item;
+        size++;
     }
 
     @Override
-    public T remove(int index) {
-        return null;
+    public T remove(final int index) {
+        T item = array[index];
+        System.arraycopy(array, index + 1, array, index, array.length - 1 - index);
+        size--;
+        return item;
     }
 
     @SuppressWarnings("unchecked")

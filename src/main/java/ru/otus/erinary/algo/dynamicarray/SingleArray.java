@@ -1,16 +1,13 @@
 package ru.otus.erinary.algo.dynamicarray;
 
-import java.util.Arrays;
-
 /**
  * Список на массиве без заданного размера.
  */
-public class SingleArray<T> implements CustomArrayList<T> {
-    private T[] array;
+public class SingleArray<T> extends CustomArrayList<T> {
 
     @SuppressWarnings("unchecked")
     public SingleArray() {
-        array = (T[]) (new Object[0]);
+        super((T[]) (new Object[0]));
     }
 
     @Override
@@ -50,24 +47,6 @@ public class SingleArray<T> implements CustomArrayList<T> {
         System.arraycopy(array, index + 1, newArray, index, size() - 1 - index);
         array = newArray;
         return item;
-    }
-
-    @Override
-    public String toString() {
-        var it = Arrays.stream(array).iterator();
-        if (!it.hasNext())
-            return "[]";
-
-        var sb = new StringBuilder();
-        sb.append('[');
-
-        while (true) {
-            T item = it.next();
-            sb.append(item);
-            if (!it.hasNext())
-                return sb.append(']').toString();
-            sb.append(',').append(' ');
-        }
     }
 
     @SuppressWarnings("unchecked")

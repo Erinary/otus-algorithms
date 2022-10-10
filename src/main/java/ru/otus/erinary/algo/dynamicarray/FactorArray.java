@@ -3,15 +3,15 @@ package ru.otus.erinary.algo.dynamicarray;
 /**
  * Список на массиве с увеличением на множитель.
  */
-public class FactorArray<T> implements CustomArrayList<T> {
+public class FactorArray<T> extends CustomArrayList<T> {
 
     private static final int FACTOR = 2;
-    private T[] array;
+    private static final int DEFAULT_CAPACITY = 10;
     private int size;
 
     @SuppressWarnings("unchecked")
     public FactorArray() {
-        array = (T[]) (new Object[10]);
+        super((T[]) (new Object[DEFAULT_CAPACITY]));
         size = 0;
     }
 
@@ -40,12 +40,12 @@ public class FactorArray<T> implements CustomArrayList<T> {
     }
 
     @Override
-    public void put(T item, int index) {
+    public void put(final T item, final int index) {
 
     }
 
     @Override
-    public T remove(int index) {
+    public T remove(final int index) {
         return null;
     }
 

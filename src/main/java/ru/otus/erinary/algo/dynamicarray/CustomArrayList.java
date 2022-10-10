@@ -1,53 +1,35 @@
 package ru.otus.erinary.algo.dynamicarray;
 
+import java.util.Arrays;
+
 /**
- * Интерфейс динамического списка.
+ * Класс-родитель для реализаций динамических массивов.
+ *
+ * @param <T>
  */
-public interface CustomArrayList<T> {
+public abstract class CustomArrayList<T> implements DynamicList<T>{
 
-    /**
-     * Возвращает количество элементов в списке.
-     *
-     * @return количество элементов в списке
-     */
-    int size();
+    protected T[] array;
 
-    /**
-     * Возвращает флаг, содержит ли список элементы.
-     *
-     * @return true, если список пустой.
-     */
-    boolean isEmpty();
+    protected CustomArrayList(final T[] array) {
+        this.array = array;
+    }
 
-    /**
-     * Получение элемента по индексу.
-     *
-     * @param index индекс элемента
-     * @return элемент списка
-     */
-    T get(int index);
+    @Override
+    public String toString() {
+        var it = Arrays.stream(array).iterator();
+        if (!it.hasNext())
+            return "[]";
 
-    /**
-     * Помещает элемент в список.
-     *
-     * @param item элемент
-     */
-    void put(T item);
+        var sb = new StringBuilder();
+        sb.append('[');
 
-    /**
-     * Помещает элемент по указанному индексу
-     *
-     * @param item  элемент
-     * @param index индекс
-     */
-    void put(T item, int index);
-
-    /**
-     * Удаляет указанный элемент.
-     *
-     * @param index индекс элемента
-     * @return удаленный элемент
-     */
-    T remove(int index);
-
+        while (true) {
+            T item = it.next();
+            sb.append(item);
+            if (!it.hasNext())
+                return sb.append(']').toString();
+            sb.append(',').append(' ');
+        }
+    }
 }
