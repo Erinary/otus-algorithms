@@ -31,6 +31,12 @@ public class DynamicListApp {
         for (int n = 100; n <= 1000000; n *= 10) {
             fillArrayList(factorList, n);
         }
+
+        logger.info("MatrixArray");
+        var matrixList = new MatrixArray<Integer>(20);
+        for (int n = 100; n <= 1000000; n *= 10) {
+            fillArrayList(matrixList, n);
+        }
     }
 
     private static void fillArrayList(final DynamicList<Integer> list, final int total) {

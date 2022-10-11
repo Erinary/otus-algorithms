@@ -1,9 +1,11 @@
 package ru.otus.erinary.algo.dynamicarray;
 
+import java.util.Iterator;
+
 /**
  * Интерфейс динамического списка.
  */
-public interface DynamicList<T> {
+public interface DynamicList<T> extends Iterable<T> {
 
     /**
      * Возвращает количество элементов в списке.
@@ -49,5 +51,12 @@ public interface DynamicList<T> {
      * @return удаленный элемент
      */
     T remove(int index);
+
+    /**
+     * Возвращает объект {@link Iterator}.
+     *
+     * @return итератор
+     */
+    Iterator<T> iterator();
 
 }

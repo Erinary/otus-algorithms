@@ -7,7 +7,7 @@ import java.util.Arrays;
  *
  * @param <T>
  */
-public abstract class CustomArrayList<T> implements DynamicList<T>{
+public abstract class CustomArrayList<T> implements DynamicList<T> {
 
     protected T[] array;
 
@@ -18,8 +18,9 @@ public abstract class CustomArrayList<T> implements DynamicList<T>{
     @Override
     public String toString() {
         var it = Arrays.stream(array).iterator();
-        if (!it.hasNext())
+        if (!it.hasNext()) {
             return "[]";
+        }
 
         var sb = new StringBuilder();
         sb.append('[');

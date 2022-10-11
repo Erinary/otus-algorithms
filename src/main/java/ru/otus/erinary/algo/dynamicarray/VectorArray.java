@@ -1,5 +1,8 @@
 package ru.otus.erinary.algo.dynamicarray;
 
+import java.util.Arrays;
+import java.util.Iterator;
+
 /**
  * Список на массиве заданного размера.
  */
@@ -59,6 +62,11 @@ public class VectorArray<T> extends CustomArrayList<T> {
         array = newArray;
         size--;
         return item;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return Arrays.stream(array).iterator();
     }
 
     @SuppressWarnings("unchecked")

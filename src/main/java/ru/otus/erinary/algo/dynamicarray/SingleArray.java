@@ -1,5 +1,8 @@
 package ru.otus.erinary.algo.dynamicarray;
 
+import java.util.Arrays;
+import java.util.Iterator;
+
 /**
  * Список на массиве без заданного размера.
  */
@@ -38,7 +41,7 @@ public class SingleArray<T> extends CustomArrayList<T> {
         array[index] = item;
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "DuplicatedCode"})
     @Override
     public T remove(final int index) {
         T item = array[index];
@@ -47,6 +50,11 @@ public class SingleArray<T> extends CustomArrayList<T> {
         System.arraycopy(array, index + 1, newArray, index, size() - 1 - index);
         array = newArray;
         return item;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return Arrays.stream(array).iterator();
     }
 
     @SuppressWarnings("unchecked")

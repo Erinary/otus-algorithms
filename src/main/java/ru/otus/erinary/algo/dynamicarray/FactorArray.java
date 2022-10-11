@@ -1,5 +1,8 @@
 package ru.otus.erinary.algo.dynamicarray;
 
+import java.util.Arrays;
+import java.util.Iterator;
+
 /**
  * Список на массиве с увеличением на множитель.
  */
@@ -11,7 +14,7 @@ public class FactorArray<T> extends CustomArrayList<T> {
     @SuppressWarnings("unchecked")
     public FactorArray() {
         super((T[]) (new Object[0]));
-        size = 0;
+        this.size = 0;
     }
 
     @Override
@@ -58,6 +61,11 @@ public class FactorArray<T> extends CustomArrayList<T> {
         array = newArray;
         size--;
         return item;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return Arrays.stream(array).iterator();
     }
 
     @SuppressWarnings("unchecked")
