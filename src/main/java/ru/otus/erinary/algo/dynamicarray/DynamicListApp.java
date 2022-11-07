@@ -31,12 +31,21 @@ public class DynamicListApp {
         for (int n = 100; n <= 1000000; n *= 10) {
             fillArrayList(factorList, n);
         }
+        fillArrayList(factorList, 3000000);
 
         logger.info("MatrixArray");
         var matrixList = new MatrixArray<Integer>(20);
         for (int n = 100; n <= 1000000; n *= 10) {
             fillArrayList(matrixList, n);
         }
+        fillArrayList(matrixList, 3000000);
+
+        logger.info("ArrayListWrapper");
+        var javaArrayList = new ArrayListWrapper<Integer>();
+        for (int n = 100; n <= 1000000; n *= 10) {
+            fillArrayList(javaArrayList, n);
+        }
+        fillArrayList(javaArrayList, 3000000);
     }
 
     private static void fillArrayList(final DynamicList<Integer> list, final int total) {
