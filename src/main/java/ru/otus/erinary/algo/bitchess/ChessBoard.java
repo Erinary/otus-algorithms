@@ -18,14 +18,18 @@ import java.nio.ByteBuffer;
  */
 public class ChessBoard {
 
-    public static final BigInteger A_COLUMN = new BigInteger("fefefefefefefefe", 16);
-    public static final BigInteger AB_COLUMN = new BigInteger("fcfcfcfcfcfcfcfc", 16);
-    public static final BigInteger H_COLUMN = new BigInteger("7f7f7f7f7f7f7f7f", 16);
-    public static final BigInteger GH_COLUMN = new BigInteger("3f3f3f3f3f3f3f3f", 16);
+    public static final BigInteger EXCLUDED_A_COLUMN = new BigInteger("fefefefefefefefe", 16);
+    public static final BigInteger EXCLUDED_AB_COLUMN = new BigInteger("fcfcfcfcfcfcfcfc", 16);
+    public static final BigInteger EXCLUDED_H_COLUMN = new BigInteger("7f7f7f7f7f7f7f7f", 16);
+    public static final BigInteger EXCLUDED_GH_COLUMN = new BigInteger("3f3f3f3f3f3f3f3f", 16);
+    public static final BigInteger DIAGONAL_A8H1 = new BigInteger("102040810204080", 16);
+    public static final BigInteger DIAGONAL_A1H8 = new BigInteger("8040201008040201", 16);
 
     public static void main(String[] args) {
         System.out.println("King: " + getKingsMoves(59));
         System.out.println("Knight: " + getKnightsMoves(24));
+        System.out.println("Rook: " + getRookMoves(37));
+        System.out.println("Bishop: " + getBishopMoves(58));
     }
 
     /**
@@ -36,8 +40,8 @@ public class ChessBoard {
      */
     public static BigInteger getKingsMoves(final int position) {
         var start = BigInteger.ONE.shiftLeft(position);
-        var aPos = start.and(A_COLUMN);
-        var hPos = start.and(H_COLUMN);
+        var aPos = start.and(EXCLUDED_A_COLUMN);
+        var hPos = start.and(EXCLUDED_H_COLUMN);
 
         var mask = aPos.shiftLeft(7).or(start.shiftLeft(8)).or(hPos.shiftLeft(9))
                 .or(aPos.shiftRight(1)).or(hPos.shiftLeft(1))
@@ -54,12 +58,78 @@ public class ChessBoard {
     public static BigInteger getKnightsMoves(final int position) {
         var start = BigInteger.ONE.shiftLeft(position);
 
-        var mask = GH_COLUMN.and(start.shiftLeft(6).or(start.shiftRight(10)))
-                .or(H_COLUMN.and(start.shiftLeft(15).or(start.shiftRight(17))))
-                .or(A_COLUMN.and(start.shiftLeft(17).or(start.shiftRight(15))))
-                .or(AB_COLUMN.and(start.shiftLeft(10).or(start.shiftRight(6))));
+        var mask = EXCLUDED_GH_COLUMN.and(start.shiftLeft(6).or(start.shiftRight(10)))
+                .or(EXCLUDED_H_COLUMN.and(start.shiftLeft(15).or(start.shiftRight(17))))
+                .or(EXCLUDED_A_COLUMN.and(start.shiftLeft(17).or(start.shiftRight(15))))
+                .or(EXCLUDED_AB_COLUMN.and(start.shiftLeft(10).or(start.shiftRight(6))));
 
         return trimToUInt64(mask);
+    }
+
+    public static BigInteger getRookMoves(final int position) {
+        var start = BigInteger.ONE.shiftLeft(position);
+
+        var verticalMoves = new BigInteger("101010101010101", 16);
+        while (verticalMoves.and(start).equals(BigInteger.ZERO)) {
+            verticalMoves = verticalMoves.shiftLeft(1);
+        }
+
+        var horizontalMoves = new BigInteger("ff", 16);
+        while (horizontalMoves.and(start).equals(BigInteger.ZERO)) {
+            horizontalMoves = horizontalMoves.shiftLeft(8);
+        }
+
+        return trimToUInt64(verticalMoves.or(horizontalMoves));
+    }
+
+    public static BigInteger getBishopMoves(final int position) {
+        var start = BigInteger.ONE.shiftLeft(position);
+
+        var diagonalLeft = BigInteger.ZERO;
+        var startingDiagonalLeft = DIAGONAL_A8H1;
+        var leftLowerDiagonalField = new BigInteger("103070f1f3f7f", 16);
+        for (int i = 0; i < 7; i++) {
+            if (!startingDiagonalLeft.and(start).equals(BigInteger.ZERO)) {
+                diagonalLeft = startingDiagonalLeft;
+                break;
+            }
+            startingDiagonalLeft = startingDiagonalLeft.shiftRight(1).and(leftLowerDiagonalField);
+        }
+        if (diagonalLeft.equals(BigInteger.ZERO)) {
+            startingDiagonalLeft = DIAGONAL_A8H1;
+            var leftUpperDiagonalField = new BigInteger("fefcf8f0e0c08000", 16);
+            for (int i = 0; i < 7; i++) {
+                if (!startingDiagonalLeft.and(start).equals(BigInteger.ZERO)) {
+                    diagonalLeft = startingDiagonalLeft;
+                    break;
+                }
+                startingDiagonalLeft = startingDiagonalLeft.shiftLeft(1).and(leftUpperDiagonalField);
+            }
+        }
+
+        var diagonalRight = BigInteger.ZERO;
+        var startingDiagonalRight = DIAGONAL_A1H8;
+        var rightLowerDiagonalField = new BigInteger("80c0e0f0f8fcfe", 16);
+        for (int i = 0; i < 7; i++) {
+            if (!startingDiagonalRight.and(start).equals(BigInteger.ZERO)) {
+                diagonalRight = startingDiagonalRight;
+                break;
+            }
+            startingDiagonalRight = startingDiagonalRight.shiftLeft(1).and(rightLowerDiagonalField);
+        }
+        if (diagonalRight.equals(BigInteger.ZERO)) {
+            startingDiagonalRight = DIAGONAL_A1H8;
+            var rightUpperDiagonalField = new BigInteger("7f3f1f0f07030100", 16);
+            for (int i = 0; i < 7; i++) {
+                if (!startingDiagonalRight.and(start).equals(BigInteger.ZERO)) {
+                    diagonalRight = startingDiagonalRight;
+                    break;
+                }
+                startingDiagonalRight = startingDiagonalRight.shiftRight(1).and(rightUpperDiagonalField);
+            }
+        }
+
+        return trimToUInt64(diagonalLeft.or(diagonalRight));
     }
 
     /**
