@@ -1,4 +1,4 @@
-package ru.otus.erinary.algo.simplesorts;
+package ru.otus.erinary.algo.sorting.simplesorts;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,4 +1,6 @@
-package ru.otus.erinary.algo.simplesorts;
+package ru.otus.erinary.algo.sorting.simplesorts;
+
+import ru.otus.erinary.algo.sorting.AbstractSort;
 
 /**
  * Сортировка вставкой.
@@ -8,21 +10,22 @@ package ru.otus.erinary.algo.simplesorts;
  * позицию (остальные элементы отсортированной части смещаются направо).
  * Сложность - O(N^2).
  */
-public class InsertionSort extends SimpleSort {
+public class InsertionSort extends AbstractSort {
 
     /**
      * Выполняет сортировку переданного массива.
      *
      * @param array массив чисел
      */
+    @Override
     public void sort(final int[] array) {
-        startWatch();
+        watcher.startWatch();
         for (int i = 1; i < array.length; i++) {
             for (int j = i - 1; j >= 0 && array[j] > array[j + 1]; j--) {
                 swap(array, j, j + 1);
             }
         }
-        stopWatch();
+        watcher.stopWatch();
     }
 
     /**
@@ -32,7 +35,7 @@ public class InsertionSort extends SimpleSort {
      * @param array массив чисел
      */
     public void sortShifted(final int[] array) {
-        startWatch();
+        watcher.startWatch();
         int j;
         for (int i = 1; i < array.length; i++) {
             int k = array[i];
@@ -41,7 +44,7 @@ public class InsertionSort extends SimpleSort {
             }
             array[j + 1] = k;
         }
-        stopWatch();
+        watcher.stopWatch();
     }
 
     /**
@@ -51,7 +54,7 @@ public class InsertionSort extends SimpleSort {
      * @param array массив чисел
      */
     public void sortBinaryShifted(final int[] array) {
-        startWatch();
+        watcher.startWatch();
         int j;
         for (int i = 1; i < array.length; i++) {
             int k = array[i];
@@ -61,7 +64,7 @@ public class InsertionSort extends SimpleSort {
             }
             array[j + 1] = k;
         }
-        stopWatch();
+        watcher.stopWatch();
     }
 
     private int binarySearch(final int[] array, final int key, final int start, final int end) {

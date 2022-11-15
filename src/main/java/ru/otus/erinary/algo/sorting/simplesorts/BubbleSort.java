@@ -1,21 +1,24 @@
-package ru.otus.erinary.algo.simplesorts;
+package ru.otus.erinary.algo.sorting.simplesorts;
+
+import ru.otus.erinary.algo.sorting.AbstractSort;
 
 /**
  * Сортировка пузырьком.
  * <p>
- * Алгоритм за каждую итерацию находит максимальный элемент (сравнивает два соседних) и перетаскивает его в
- * отсортированную часть.
+ * Массив условно делится на отсотированную часть (справа) и неотсортированную (слева). Алгоритм за каждую итерацию
+ * находит максимальный элемент (сравнивает два соседних) и перетаскивает его в отсортированную часть.
  * Сложность - O(N^2).
  */
-public class BubbleSort extends SimpleSort {
+public class BubbleSort extends AbstractSort {
 
     /**
      * Выполняет сортировку переданного массива.
      *
      * @param array массив чисел
      */
+    @Override
     public void sort(final int[] array) {
-        startWatch();
+        watcher.startWatch();
         for (int i = 1; i < array.length; i++) {
             for (int j = 0; j < array.length - i; j++) {
                 if (array[j] > array[j + 1]) {
@@ -23,7 +26,7 @@ public class BubbleSort extends SimpleSort {
                 }
             }
         }
-        stopWatch();
+        watcher.stopWatch();
     }
 
     /**
@@ -32,7 +35,7 @@ public class BubbleSort extends SimpleSort {
      * @param array массив чисел
      */
     public void optimizedSort(final int[] array) {
-        startWatch();
+        watcher.startWatch();
         boolean swapped = true;
         while (swapped) {
             swapped = false;
@@ -43,7 +46,7 @@ public class BubbleSort extends SimpleSort {
                 }
             }
         }
-        stopWatch();
+        watcher.stopWatch();
     }
 
 }
