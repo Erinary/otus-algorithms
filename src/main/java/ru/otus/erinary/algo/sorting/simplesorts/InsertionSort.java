@@ -12,11 +12,6 @@ import ru.otus.erinary.algo.sorting.AbstractSort;
  */
 public class InsertionSort extends AbstractSort {
 
-    /**
-     * Выполняет сортировку переданного массива.
-     *
-     * @param array массив чисел
-     */
     @Override
     public void sort(final int[] array) {
         watcher.startWatch();

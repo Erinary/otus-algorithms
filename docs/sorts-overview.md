@@ -10,3 +10,5 @@
 | ShellSort     | ~O(N^1.5)   | Const             | -                            | -                     | -            | -+           | -      |
 | SelectionSort | O(N^2)      | Const             | (N^2 - N)/2                  | N (число обменов)     | -            | -            | -      |
 | HeapSort      | O(N*log(N)) | log(N)            | -                            | -                     | -            | -            | -      |
+| QuickSort     | O(N*log(N)) | log(N)            | -                            | -                     | -            | -            | -      |
+| MergeSort     | O(N*log(N)) | N + log(N)        | -                            | -                     | +            | -            | -(+)   |

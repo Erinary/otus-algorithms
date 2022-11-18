@@ -11,11 +11,6 @@ import ru.otus.erinary.algo.sorting.AbstractSort;
  */
 public class SelectionSort extends AbstractSort {
 
-    /**
-     * Выполняет сортировку переданного массива.
-     *
-     * @param array массив чисел
-     */
     public void sort(final int[] array) {
         watcher.startWatch();
         int max = findMax(array, array.length);

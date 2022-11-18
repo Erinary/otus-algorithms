@@ -10,12 +10,6 @@ import ru.otus.erinary.algo.sorting.AbstractSort;
  * Сложность - O(N^2).
  */
 public class BubbleSort extends AbstractSort {
-
-    /**
-     * Выполняет сортировку переданного массива.
-     *
-     * @param array массив чисел
-     */
     @Override
     public void sort(final int[] array) {
         watcher.startWatch();

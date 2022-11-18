@@ -8,6 +8,11 @@ public abstract class AbstractSort {
 
     protected SortWatcher watcher = new SortWatcher();
 
+    /**
+     * Выполняет сортировку переданного массива.
+     *
+     * @param array массив чисел
+     */
     public abstract void sort(final int[] array);
 
     /**
