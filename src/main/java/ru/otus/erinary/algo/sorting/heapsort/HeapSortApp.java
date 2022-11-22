@@ -2,7 +2,6 @@ package ru.otus.erinary.algo.sorting.heapsort;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.otus.erinary.algo.sorting.simplesorts.SimpleSortApp;
 
 import java.util.Random;
 
@@ -11,7 +10,7 @@ import java.util.Random;
  */
 public class HeapSortApp {
 
-    private static final Logger logger = LoggerFactory.getLogger(SimpleSortApp.class);
+    private static final Logger logger = LoggerFactory.getLogger(HeapSortApp.class);
 
     public static void main(String[] args) {
         compareSorts();

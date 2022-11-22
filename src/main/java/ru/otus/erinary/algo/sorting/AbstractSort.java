@@ -29,6 +29,23 @@ public abstract class AbstractSort {
     }
 
     /**
+     * Метод поиска индекса максимального элемента в массиве.
+     *
+     * @param array    массив чисел
+     * @param position позиция в массиве, до которой нужно искать максимальный элемент
+     * @return индекс максимального элемента
+     */
+    protected int findIndexMax(final int[] array, final int position) {
+        int x = 0;
+        for (int i = 1; i < position; i++) {
+            if (array[i] > array[x]) {
+                x = i;
+            }
+        }
+        return x;
+    }
+
+    /**
      * Класс для запуска таймера и вывода лога.
      */
     public static class SortWatcher {

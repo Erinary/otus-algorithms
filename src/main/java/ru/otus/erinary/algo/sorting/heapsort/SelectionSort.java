@@ -13,28 +13,12 @@ public class SelectionSort extends AbstractSort {
 
     public void sort(final int[] array) {
         watcher.startWatch();
-        int max = findMax(array, array.length);
+        int max = findIndexMax(array, array.length);
         for (int i = array.length - 1; i > 0; i--) {
             swap(array, max, i);
-            max = findMax(array, i);
+            max = findIndexMax(array, i);
         }
         watcher.stopWatch();
     }
 
-    /**
-     * Метод поиска индекса максимального элемента в массиве.
-     *
-     * @param array    массив чисел
-     * @param position позиция в массиве, до которой нужно искать максимальный элемент
-     * @return индекс максимального элемента
-     */
-    private int findMax(final int[] array, final int position) {
-        int x = 0;
-        for (int i = 1; i < position; i++) {
-            if (array[i] > array[x]) {
-                x = i;
-            }
-        }
-        return x;
-    }
 }
