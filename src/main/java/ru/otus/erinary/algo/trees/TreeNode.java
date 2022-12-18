@@ -1,15 +1,16 @@
 package ru.otus.erinary.algo.trees;
 
+import java.util.Optional;
+
 /**
  * Узел дерева.
  */
 public class TreeNode {
 
-    private final int key;
+    private int key;
     private TreeNode parent;
     private TreeNode left;
     private TreeNode right;
-
     private int height;
 
     /**
@@ -25,11 +26,15 @@ public class TreeNode {
         return key;
     }
 
+    public void setKey(final int key) {
+        this.key = key;
+    }
+
     public TreeNode getParent() {
         return parent;
     }
 
-    public void setParent(TreeNode parent) {
+    public void setParent(final TreeNode parent) {
         this.parent = parent;
     }
 
@@ -37,7 +42,7 @@ public class TreeNode {
         return left;
     }
 
-    public void setLeft(TreeNode left) {
+    public void setLeft(final TreeNode left) {
         this.left = left;
     }
 
@@ -45,8 +50,23 @@ public class TreeNode {
         return right;
     }
 
-    public void setRight(TreeNode right) {
+    public void setRight(final TreeNode right) {
         this.right = right;
+    }
+
+    /**
+     * Добавляет левую или правую (в зависимости от значения ключа) доечернюю ноду.
+     *
+     * @param child новая дочерняя нода
+     */
+    public void addChild(final TreeNode child) {
+        Optional.ofNullable(child).ifPresent(c -> {
+            if (c.getKey() < key) {
+                left = c;
+            } else if (c.getKey() > key) {
+                right = c;
+            }
+        });
     }
 
     public int getHeight() {
