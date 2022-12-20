@@ -32,5 +32,5 @@ public interface BinaryTree {
      *
      * @param item элемент
      */
-    void remove(int item);
+    void delete(int item);
 }

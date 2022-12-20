@@ -9,6 +9,20 @@ public class BinarySearchTree implements BinaryTree {
 
     private TreeNode root;
 
+    public BinarySearchTree() {
+    }
+
+    /**
+     * Заполняет дерево элементами из переданного массива.
+     *
+     * @param array массив чисел
+     */
+    public BinarySearchTree(final int[] array) {
+        for (int elem : array) {
+            insert(elem);
+        }
+    }
+
     @Override
     public TreeNode getRoot() {
         return root;
@@ -48,7 +62,7 @@ public class BinarySearchTree implements BinaryTree {
     }
 
     @Override
-    public void remove(final int item) {
+    public void delete(final int item) {
         var node = internalSearch(root, item);
         if (node == null) {
             return;
@@ -66,7 +80,7 @@ public class BinarySearchTree implements BinaryTree {
                 leftMaxParent.setLeft(null);
             }
 
-            //node has 1 child
+        //node has 1 child
         } else if (node.getLeft() != null) {
             node.getLeft().setParent(node.getParent());
             node.getLeft().recalculateHeight();
@@ -76,7 +90,7 @@ public class BinarySearchTree implements BinaryTree {
             node.getRight().recalculateHeight();
             Optional.ofNullable(node.getParent()).ifPresent(p -> p.addChild(node.getRight()));
 
-            //node has no children
+        //node has no children
         } else {
             Optional.ofNullable(node.getParent()).ifPresent(p -> {
                 if (node.getKey() < p.getKey()) {

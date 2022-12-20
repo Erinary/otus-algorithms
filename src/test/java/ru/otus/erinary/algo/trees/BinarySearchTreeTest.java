@@ -56,24 +56,24 @@ class BinarySearchTreeTest {
     }
 
     @Test
-    void remove() {
+    void delete() {
         int [] elements = {30, 25, 33, 28, 35, 34, 20, 23};
         var tree = createTree(elements);
         System.out.println(printer.buildTreeDiagram(tree));
 
-        tree.remove(23);
+        tree.delete(23);
         assertFalse(tree.search(23));
         System.out.println(printer.buildTreeDiagram(tree));
 
-        tree.remove(35);
+        tree.delete(35);
         assertFalse(tree.search(35));
         System.out.println(printer.buildTreeDiagram(tree));
 
-        tree.remove(25);
+        tree.delete(25);
         assertFalse(tree.search(25));
         System.out.println(printer.buildTreeDiagram(tree));
 
-        tree.remove(30);
+        tree.delete(30);
         assertFalse(tree.search(30));
         System.out.println(printer.buildTreeDiagram(tree));
     }
