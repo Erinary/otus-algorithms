@@ -1,25 +1,40 @@
-package ru.otus.erinary.algo.trees;
+package ru.otus.erinary.algo.trees.nodes;
 
 import java.util.Optional;
 
 /**
- * Узел дерева.
+ * Узел бинарного дерева.
  */
-public class TreeNode {
+public class BinaryTreeNode {
 
     private int key;
-    private TreeNode parent;
-    private TreeNode left;
-    private TreeNode right;
+    private BinaryTreeNode parent;
+    private BinaryTreeNode left;
+    private BinaryTreeNode right;
     private int height;
+    private int weight;
+
+    public BinaryTreeNode() {
+    }
 
     /**
-     * Возвращает экземпляр {@link TreeNode}.
+     * Возвращает экземпляр {@link BinaryTreeNode}.
      *
      * @param key ключ узла
      */
-    public TreeNode(final int key) {
+    public BinaryTreeNode(final int key) {
         this.key = key;
+    }
+
+    /**
+     * Возвращает экземпляр {@link BinaryTreeNode}.
+     *
+     * @param key    ключ узла
+     * @param weight вес узла
+     */
+    public BinaryTreeNode(final int key, final int weight) {
+        this.key = key;
+        this.weight = weight;
     }
 
     public int getKey() {
@@ -30,28 +45,40 @@ public class TreeNode {
         this.key = key;
     }
 
-    public TreeNode getParent() {
+    public BinaryTreeNode getParent() {
         return parent;
     }
 
-    public void setParent(final TreeNode parent) {
+    public void setParent(final BinaryTreeNode parent) {
         this.parent = parent;
     }
 
-    public TreeNode getLeft() {
+    public BinaryTreeNode getLeft() {
         return left;
     }
 
-    public void setLeft(final TreeNode left) {
+    public void setLeft(final BinaryTreeNode left) {
         this.left = left;
     }
 
-    public TreeNode getRight() {
+    public BinaryTreeNode getRight() {
         return right;
     }
 
-    public void setRight(final TreeNode right) {
+    public void setRight(final BinaryTreeNode right) {
         this.right = right;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public void setWeight(final int weight) {
+        this.weight = weight;
     }
 
     /**
@@ -59,7 +86,7 @@ public class TreeNode {
      *
      * @param child новая дочерняя нода
      */
-    public void addChild(final TreeNode child) {
+    public void addChild(final BinaryTreeNode child) {
         Optional.ofNullable(child).ifPresent(c -> {
             if (c.getKey() < key) {
                 left = c;
@@ -67,10 +94,6 @@ public class TreeNode {
                 right = c;
             }
         });
-    }
-
-    public int getHeight() {
-        return height;
     }
 
     /**

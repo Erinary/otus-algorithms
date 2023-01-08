@@ -1,5 +1,7 @@
 package ru.otus.erinary.algo.trees;
 
+import ru.otus.erinary.algo.trees.nodes.BinaryTreeNode;
+
 import java.util.Optional;
 
 /**
@@ -7,7 +9,7 @@ import java.util.Optional;
  */
 public class BinarySearchTree implements BinaryTree {
 
-    private TreeNode root;
+    private BinaryTreeNode root;
 
     public BinarySearchTree() {
     }
@@ -24,27 +26,34 @@ public class BinarySearchTree implements BinaryTree {
     }
 
     @Override
-    public TreeNode getRoot() {
+    public BinaryTreeNode getRoot() {
         return root;
     }
 
     @Override
     public void insert(final int item) {
-        root = insertInternal(root, null, item);
+        root = insertInternal(root, null, item, 0);
     }
 
-    private TreeNode insertInternal(final TreeNode node, final TreeNode parent, final int item) {
+    @Override
+    public void insert(final int item, final int weight) {
+        root = insertInternal(root, null, item, weight);
+    }
+
+    private BinaryTreeNode insertInternal(final BinaryTreeNode node, final BinaryTreeNode parent, final int item,
+                                          final int weight) {
         if (node == null) {
-            var current = new TreeNode(item);
+            var current = new BinaryTreeNode(item);
+            current.setWeight(weight);
             current.setParent(parent);
             current.recalculateHeight();
             return current;
         }
 
         if (node.getKey() > item) {
-            node.setLeft(insertInternal(node.getLeft(), node, item));
+            node.setLeft(insertInternal(node.getLeft(), node, item, weight));
         } else if (node.getKey() < item) {
-            node.setRight(insertInternal(node.getRight(), node, item));
+            node.setRight(insertInternal(node.getRight(), node, item, weight));
         }
         return node;
     }
@@ -54,7 +63,7 @@ public class BinarySearchTree implements BinaryTree {
         return internalSearch(root, item) != null;
     }
 
-    private TreeNode internalSearch(final TreeNode node, final int item) {
+    private BinaryTreeNode internalSearch(final BinaryTreeNode node, final int item) {
         if (node == null || node.getKey() == item) {
             return node;
         }
@@ -108,7 +117,7 @@ public class BinarySearchTree implements BinaryTree {
      * @param root корень поддерева
      * @return нода с максимальным значением
      */
-    public static TreeNode findMax(final TreeNode root) {
+    public static BinaryTreeNode findMax(final BinaryTreeNode root) {
         return root.getRight() == null ? root : findMax(root.getRight());
     }
 

@@ -1,5 +1,7 @@
 package ru.otus.erinary.algo.trees;
 
+import ru.otus.erinary.algo.trees.nodes.BinaryTreeNode;
+
 /**
  * Утилитарный класс, который строит диаграмму бинарного дерева. Формат узла: 'ключ (высота)'
  */
@@ -14,7 +16,7 @@ public class BinaryTreePrinter {
         return traversePreOrder(tree.getRoot());
     }
 
-    private String traversePreOrder(final TreeNode root) {
+    private String traversePreOrder(final BinaryTreeNode root) {
 
         if (root == null) {
             return "";
@@ -32,7 +34,7 @@ public class BinaryTreePrinter {
         return sb.toString();
     }
 
-    private void traverseNodes(final StringBuilder sb, final String padding, final String pointer, final TreeNode node,
+    private void traverseNodes(final StringBuilder sb, final String padding, final String pointer, final BinaryTreeNode node,
                                final boolean hasRightSibling) {
         if (node != null) {
             sb.append("\n");
