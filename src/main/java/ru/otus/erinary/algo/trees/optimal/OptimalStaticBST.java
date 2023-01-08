@@ -4,7 +4,14 @@ import org.apache.commons.lang3.tuple.Pair;
 import ru.otus.erinary.algo.trees.BinarySearchTree;
 import ru.otus.erinary.algo.trees.nodes.BinaryTreeNode;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+import java.util.Queue;
 
 /**
  * Оптимальное бинарное дерево поиска. Статичное, т. к. не может быть изменено после создания.
@@ -43,6 +50,7 @@ public class OptimalStaticBST extends BinarySearchTree implements Iterable<Binar
                 this.height = calculateHeight();
                 break;
             case KEY_SORTING:
+                pairs.sort(Comparator.comparingInt(Pair::getLeft));
                 recursiveMehlhornAlgo(pairs, 0, pairs.size());
                 this.weight = calculateWeight();
                 this.height = calculateHeight();
@@ -52,26 +60,32 @@ public class OptimalStaticBST extends BinarySearchTree implements Iterable<Binar
         }
     }
 
-    private void recursiveMehlhornAlgo(final List<Pair<Integer, Integer>> pairs, final int first, final int last) {
-        int sum = 0;
-        int weight = 0;
-        if (first < last) {
-            for (int i = first; i < last; i++) {
-                weight += pairs.get(i).getRight();
-            }
-            int current = first;
-            for (; current < last; current++) {
-                var node = pairs.get(current);
-                if (sum < weight / 2 && sum + node.getRight() > weight / 2) {
-                    sum += node.getRight();
-                } else {
-                    super.insert(node.getLeft(), node.getRight());
-                    break;
-                }
-            }
-            recursiveMehlhornAlgo(pairs, first, current);
-            recursiveMehlhornAlgo(pairs, current + 1, last);
+    private void recursiveMehlhornAlgo(final List<Pair<Integer, Integer>> pairs, final int firstIdx, final int lastIdx) {
+        if (firstIdx < lastIdx) {
+            var massCenterIdx = getMassCenterIdx(pairs, firstIdx, lastIdx);
+            var node = pairs.get(massCenterIdx);
+            super.insert(node.getLeft(), node.getRight());
+            recursiveMehlhornAlgo(pairs, firstIdx, massCenterIdx);
+            recursiveMehlhornAlgo(pairs, massCenterIdx + 1, lastIdx);
         }
+    }
+
+    private static int getMassCenterIdx(final List<Pair<Integer, Integer>> pairs, final int firstIdx, final int lastIdx) {
+        int leftWeightSum = 0;
+        int totalWeight = 0;
+        for (int i = firstIdx; i < lastIdx; i++) {
+            totalWeight += pairs.get(i).getRight();
+        }
+        int currentIdx = firstIdx;
+        for (; currentIdx < lastIdx; currentIdx++) {
+            var node = pairs.get(currentIdx);
+            if (leftWeightSum < totalWeight / 2 && leftWeightSum + node.getRight() >= totalWeight / 2) {
+                return currentIdx;
+            } else {
+                leftWeightSum += node.getRight();
+            }
+        }
+        throw new RuntimeException();
     }
 
     public int getWeight() {

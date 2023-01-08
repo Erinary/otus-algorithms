@@ -28,7 +28,7 @@ class OptimalStaticBSTTest {
         var tree = new OptimalStaticBST(createPairs(), OptimalStaticBST.BuildingStrategy.KEY_SORTING);
 
         assertEquals(6, tree.getRoot().getKey());
-        assertEquals(2.85d, tree.getHeight(), 0.000001d);
+        assertEquals(2.6d, tree.getHeight(), 0.000001d);
 
         System.out.println(printer.buildTreeDiagram(tree));
     }
