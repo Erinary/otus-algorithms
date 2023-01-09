@@ -30,7 +30,7 @@ public class OptimalStaticBST extends BinarySearchTree implements Iterable<Binar
     public OptimalStaticBST(final int[] array) {
         var pairs = new ArrayList<Pair<Integer, Integer>>();
         for (int i : array) {
-            pairs.add(Pair.of(i, 0));
+            pairs.add(Pair.of(i, 1));
         }
         new OptimalStaticBST(pairs, BuildingStrategy.KEY_SORTING);
     }
@@ -71,21 +71,29 @@ public class OptimalStaticBST extends BinarySearchTree implements Iterable<Binar
     }
 
     private static int getMassCenterIdx(final List<Pair<Integer, Integer>> pairs, final int firstIdx, final int lastIdx) {
+        if (lastIdx - firstIdx < 2) {
+            return firstIdx;
+        }
         int leftWeightSum = 0;
         int totalWeight = 0;
         for (int i = firstIdx; i < lastIdx; i++) {
-            totalWeight += pairs.get(i).getRight();
+            int nodeWeight = pairs.get(i).getRight();
+            if (nodeWeight <= 0) {
+                throw new RuntimeException("Node weight less than 0 is unacceptable");
+            } else {
+                totalWeight += nodeWeight;
+            }
         }
         int currentIdx = firstIdx;
         for (; currentIdx < lastIdx; currentIdx++) {
             var node = pairs.get(currentIdx);
-            if (leftWeightSum < totalWeight / 2 && leftWeightSum + node.getRight() >= totalWeight / 2) {
+            if (leftWeightSum < Math.round((double) totalWeight / 2) && leftWeightSum + node.getRight() >= totalWeight / 2) {
                 return currentIdx;
             } else {
                 leftWeightSum += node.getRight();
             }
         }
-        throw new RuntimeException();
+        throw new RuntimeException("Weight mass center wasn't found");
     }
 
     public int getWeight() {
